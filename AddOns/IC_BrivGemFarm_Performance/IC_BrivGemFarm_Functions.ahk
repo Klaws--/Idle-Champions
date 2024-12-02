@@ -307,6 +307,27 @@ class IC_BrivGemFarm_Class
                 g_SharedData.StackFail := StackFailStates.FAILED_TO_PROGRESS ; 3
                 g_SharedData.StackFailStats.TALLY[g_SharedData.StackFail] += 1
             }
+
+
+            ; ---------- EXPERIMENTAL CODE BEGIN ----------------------------------------
+            numCards := g_SF.Memory.ActiveEffectKeyHandler.EllywickCallOfTheFeywildHandler.deckOfManyThingsHandler.cardsInHand.size.Read()
+            if numCards < 1 OR numCards > 5)
+                numCards := 0
+            nonGemCards := 0
+            loop, %numCards%
+            {
+                currCard := g_SF.Memory.ActiveEffectKeyHandler.EllywickCallOfTheFeywildHandler.deckOfManyThingsHandler.cardsInHand[A_index - 1].CardType.Read()
+                if (currCard != 3)
+                    nonGemCards := nonGemCards + 1
+            }
+            if (nonGemCards >= 3)
+            {
+                ultButton := g_SF.GetUltimateButtonByChampID(83)   ; Get ult button for Ellywick
+                g_SF.DirectedInput(,,ultButton)                    ; send ultimate button keystroke
+            }
+            ; ---------- EXPERIMENTAL CODE END ------------------------------------------
+
+
             Sleep, 20 ; here to keep the script responsive.
         }
     }
